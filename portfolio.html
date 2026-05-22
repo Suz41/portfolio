@@ -1,354 +1,497 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Suz41</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-  :root {
-    --bg: #0e0e0e;
-    --text: #d4d4d4;
-    --text-dim: #666;
-    --text-bright: #f0f0f0;
-    --border: #1e1e1e;
+:root{
+  --bg:#050505;
+  --text:#f3f3f3;
+  --muted:#767676;
+  --line:#171717;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ===== GRAIN ===== */
+
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:
+  radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size:3px 3px;
+  opacity:.08;
+  pointer-events:none;
+  z-index:999;
+}
+
+/* ===== CINEMA LIGHT ===== */
+
+.glow{
+  position:fixed;
+  width:600px;
+  height:600px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(255,255,255,0.06), transparent 70%);
+  filter:blur(90px);
+  top:-200px;
+  right:-200px;
+  z-index:-1;
+}
+
+/* ===== LAYOUT ===== */
+
+.container{
+  width:min(1200px,92%);
+  margin:auto;
+}
+
+/* ===== HERO ===== */
+
+.hero{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero-grid{
+  width:100%;
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:4rem;
+  align-items:center;
+}
+
+/* ===== LEFT ===== */
+
+.label{
+  font-size:.72rem;
+  letter-spacing:5px;
+  color:#666;
+  margin-bottom:2rem;
+  text-transform:uppercase;
+}
+
+.hero h1{
+  font-size:clamp(4rem,11vw,9rem);
+  line-height:.88;
+  letter-spacing:-7px;
+  margin-bottom:2rem;
+  max-width:700px;
+}
+
+.hero h1 span{
+  color:#5e5e5e;
+  font-style:italic;
+}
+
+.hero-text{
+  max-width:520px;
+  color:#888;
+  line-height:1.95;
+  font-size:.95rem;
+  margin-bottom:3rem;
+}
+
+/* ===== FILM TAGS ===== */
+
+.tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.8rem;
+}
+
+.tag{
+  padding:.7rem 1rem;
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:100px;
+  font-size:.78rem;
+  color:#999;
+  background:rgba(255,255,255,0.02);
+  backdrop-filter:blur(10px);
+  transition:.3s;
+}
+
+.tag:hover{
+  transform:translateY(-3px);
+  color:white;
+}
+
+/* ===== RIGHT VISUAL ===== */
+
+.visual{
+  position:relative;
+  height:650px;
+}
+
+.poster{
+  position:absolute;
+  overflow:hidden;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,0.06);
+  box-shadow:0 20px 80px rgba(0,0,0,.45);
+  transition:.4s ease;
+}
+
+.poster img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:grayscale(100%) contrast(1.1);
+}
+
+.poster:hover{
+  transform:translateY(-10px) scale(1.02);
+  z-index:10;
+}
+
+.poster1{
+  width:220px;
+  height:330px;
+  top:0;
+  right:30px;
+  transform:rotate(8deg);
+}
+
+.poster2{
+  width:200px;
+  height:290px;
+  left:0;
+  top:180px;
+  transform:rotate(-10deg);
+}
+
+.poster3{
+  width:180px;
+  height:260px;
+  right:100px;
+  bottom:0;
+  transform:rotate(4deg);
+}
+
+/* ===== QUOTE ===== */
+
+.quote{
+  position:absolute;
+  bottom:40px;
+  left:0;
+  color:#555;
+  font-size:.78rem;
+  letter-spacing:4px;
+  writing-mode:vertical-rl;
+}
+
+/* ===== FILMOGRAPHY STYLE ===== */
+
+.bottom{
+  padding:4rem 0 5rem;
+  border-top:1px solid var(--line);
+}
+
+.row{
+  display:grid;
+  grid-template-columns:.5fr 2fr 1fr;
+  gap:2rem;
+  padding:1.5rem 0;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  transition:.3s;
+}
+
+.row:hover{
+  transform:translateX(10px);
+}
+
+.year{
+  color:#555;
+  font-size:.8rem;
+}
+
+.title{
+  font-size:1.3rem;
+  letter-spacing:-1px;
+}
+
+.meta{
+  color:#777;
+  font-size:.9rem;
+  text-align:right;
+}
+
+/* ===== SOCIALS ===== */
+
+.socials{
+  margin-top:4rem;
+  display:flex;
+  flex-wrap:wrap;
+  gap:1rem;
+}
+
+.socials a{
+  padding:.9rem 1.2rem;
+  border-radius:100px;
+  border:1px solid rgba(255,255,255,0.08);
+  color:#8a8a8a;
+  font-size:.8rem;
+  transition:.3s;
+}
+
+.socials a:hover{
+  color:white;
+  background:rgba(255,255,255,0.04);
+}
+
+/* ===== FOOTER ===== */
+
+footer{
+  padding:3rem 0;
+  color:#444;
+  font-size:.75rem;
+  letter-spacing:3px;
+}
+
+/* ===== FADE ===== */
+
+.fade{
+  opacity:0;
+  transform:translateY(40px);
+  transition:1s ease;
+}
+
+.fade.show{
+  opacity:1;
+  transform:none;
+}
+
+/* ===== MOBILE ===== */
+
+@media(max-width:950px){
+
+  .hero-grid{
+    grid-template-columns:1fr;
   }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
-    line-height: 1.7;
-    overflow-x: hidden;
+  .visual{
+    height:500px;
   }
 
-  a { color: var(--text); text-decoration: none; }
-  a:hover { color: var(--text-bright); }
+}
 
-  ::selection { background: #333; color: var(--text-bright); }
+@media(max-width:600px){
 
-  /* === LAYOUT === */
-  .container {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 0 2rem;
+  .hero{
+    padding:5rem 0;
   }
 
-  /* === HERO === */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 2rem 0;
+  .hero h1{
+    letter-spacing:-3px;
   }
 
-  .hero-name {
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    font-weight: 400;
-    color: var(--text-bright);
-    margin-bottom: 1.5rem;
-    letter-spacing: -0.5px;
+  .visual{
+    height:420px;
   }
 
-  .hero-desc {
-    font-size: 1.05rem;
-    color: var(--text-dim);
-    max-width: 480px;
-    line-height: 1.8;
-    margin-bottom: 3rem;
+  .poster1{
+    width:170px;
+    height:250px;
   }
 
-  .socials {
-    display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
+  .poster2{
+    width:150px;
+    height:220px;
   }
 
-  .socials a {
-    font-size: 0.85rem;
-    color: var(--text-dim);
-    letter-spacing: 0.5px;
-    position: relative;
-    transition: color 0.2s;
+  .poster3{
+    width:140px;
+    height:200px;
   }
 
-  .socials a::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: var(--text-bright);
-    transition: width 0.3s;
+  .row{
+    grid-template-columns:1fr;
+    gap:.5rem;
   }
 
-  .socials a:hover { color: var(--text-bright); }
-  .socials a:hover::after { width: 100%; }
-
-  /* === DIVIDER === */
-  .divider {
-    width: 40px;
-    height: 1px;
-    background: var(--border);
-    margin: 5rem 0;
+  .meta{
+    text-align:left;
   }
 
-  /* === SECTION HEADERS === */
-  .label {
-    font-size: 0.75rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-bottom: 3rem;
-  }
+}
 
-  /* === ABOUT === */
-  .about {
-    padding-bottom: 4rem;
-  }
-
-  .about p {
-    color: var(--text-dim);
-    margin-bottom: 1.25rem;
-    font-size: 0.95rem;
-  }
-
-  .about p strong {
-    color: var(--text);
-    font-weight: 400;
-  }
-
-  /* === PROJECTS === */
-  .projects {
-    padding-bottom: 4rem;
-  }
-
-  .project {
-    padding: 2.5rem 0;
-    border-bottom: 1px solid var(--border);
-    transition: opacity 0.3s;
-  }
-
-  .project:last-child { border-bottom: none; }
-
-  .project:hover { opacity: 0.85; }
-
-  .project-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 0.75rem;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .project-name {
-    font-size: 1.1rem;
-    font-weight: 400;
-    color: var(--text-bright);
-  }
-
-  .project-meta {
-    font-size: 0.75rem;
-    color: var(--text-dim);
-    letter-spacing: 0.5px;
-  }
-
-  .project-desc {
-    font-size: 0.9rem;
-    color: var(--text-dim);
-    margin-bottom: 1rem;
-    max-width: 520px;
-  }
-
-  .project-links {
-    display: flex;
-    gap: 1.5rem;
-  }
-
-  .project-links a {
-    font-size: 0.8rem;
-    color: var(--text-dim);
-    letter-spacing: 0.5px;
-    transition: color 0.2s;
-  }
-
-  .project-links a:hover { color: var(--text-bright); }
-
-  /* === CONTACT === */
-  .contact {
-    padding-bottom: 6rem;
-  }
-
-  .contact-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .contact-list li {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .contact-list .name {
-    min-width: 90px;
-    font-size: 0.85rem;
-    color: var(--text-dim);
-    letter-spacing: 0.5px;
-  }
-
-  .contact-list a {
-    font-size: 0.9rem;
-    position: relative;
-  }
-
-  .contact-list a::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: var(--text-dim);
-    transition: width 0.3s;
-  }
-
-  .contact-list a:hover::after { width: 100%; }
-
-  /* === FOOTER === */
-  footer {
-    padding: 2rem 0 4rem;
-    font-size: 0.75rem;
-    color: var(--text-dim);
-    letter-spacing: 0.5px;
-  }
-
-  /* === SCROLLBAR === */
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: #222; border-radius: 2px; }
-
-  /* === FADE IN === */
-  .fade {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.5s ease-out;
-  }
-  .fade.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* === MOBILE === */
-  @media (max-width: 600px) {
-    .container { padding: 0 1.5rem; }
-    .socials { gap: 1.2rem; }
-    .project-top { flex-direction: column; gap: 0.2rem; }
-    .divider { margin: 3.5rem 0; }
-  }
 </style>
 </head>
 <body>
 
+<div class="glow"></div>
+
 <div class="container">
 
   <!-- HERO -->
+
   <section class="hero">
-    <h1 class="hero-name fade">Suz41</h1>
-    <p class="hero-desc fade">Not a developer. Just someone who makes things with AI and my own ideas. Mostly around movies.</p>
-    <nav class="socials fade">
-      <a href="https://x.com/sujalacharii" target="_blank" rel="noopener">X</a>
-      <a href="https://github.com/Suz41" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://letterboxd.com/suza1" target="_blank" rel="noopener">Letterboxd</a>
-      <a href="https://pinterest.com/suzalpins" target="_blank" rel="noopener">Pinterest</a>
-      <a href="https://instagram.com/suzalpins" target="_blank" rel="noopener">Instagram</a>
-    </nav>
+
+    <div class="hero-grid">
+
+      <!-- LEFT -->
+
+      <div class="fade">
+
+        <div class="label">
+          CINEPHILE / ARCHIVIST / DESIGN
+        </div>
+
+        <h1>
+          Cinema is<br>
+          how I <span>remember</span><br>
+          life.
+        </h1>
+
+        <p class="hero-text">
+          I collect films, posters, scenes, moods and memories.
+          I build quiet digital tools around cinema —
+          watchlogs, banner creators, archives and visual experiments.
+          Everything stays personal, minimal and local-first.
+        </p>
+
+        <div class="tags">
+          <div class="tag">Letterboxd</div>
+          <div class="tag">Film Logging</div>
+          <div class="tag">TMDB</div>
+          <div class="tag">Movie Posters</div>
+          <div class="tag">Cinema Design</div>
+          <div class="tag">Offline First</div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT -->
+
+      <div class="visual fade">
+
+        <div class="poster poster1">
+          <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1200&auto=format&fit=crop">
+        </div>
+
+        <div class="poster poster2">
+          <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=1200&auto=format&fit=crop">
+        </div>
+
+        <div class="poster poster3">
+          <img src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=1200&auto=format&fit=crop">
+        </div>
+
+        <div class="quote">
+          WATCHED / LOGGED / ARCHIVED
+        </div>
+
+      </div>
+
+    </div>
+
   </section>
 
-  <div class="divider"></div>
+  <!-- FILMOGRAPHY STYLE SECTION -->
 
-  <!-- ABOUT -->
-  <section class="about">
-    <div class="label fade">About</div>
-    <p class="fade">I'm <strong>Sujal</strong>. I build small, focused tools — mostly around movies and film. No frameworks, no build steps. Just HTML, CSS, and JavaScript.</p>
-    <p class="fade">Everything runs in the browser. No accounts, no cloud, no tracking. I like things that work offline and stay out of the way.</p>
+  <section class="bottom fade">
+
+    <div class="label">
+      Selected Works
+    </div>
+
+    <div class="row">
+      <div class="year">2026</div>
+      <div class="title">Banner</div>
+      <div class="meta">TMDB / Canvas</div>
+    </div>
+
+    <div class="row">
+      <div class="year">2026</div>
+      <div class="title">Logit</div>
+      <div class="meta">Movie Logger</div>
+    </div>
+
+    <div class="row">
+      <div class="year">2025</div>
+      <div class="title">Archive</div>
+      <div class="meta">Offline Film Log</div>
+    </div>
+
+    <!-- SOCIALS -->
+
+    <div class="socials">
+
+      <a href="https://letterboxd.com/suza1" target="_blank">
+        Letterboxd
+      </a>
+
+      <a href="https://github.com/Suz41" target="_blank">
+        GitHub
+      </a>
+
+      <a href="https://x.com/sujalacharii" target="_blank">
+        X / Twitter
+      </a>
+
+      <a href="https://instagram.com/suzalpins" target="_blank">
+        Instagram
+      </a>
+
+      <a href="https://pinterest.com/suzalpins" target="_blank">
+        Pinterest
+      </a>
+
+    </div>
+
   </section>
 
-  <div class="divider"></div>
-
-  <!-- PROJECTS -->
-  <section class="projects">
-    <div class="label fade">Projects</div>
-
-    <article class="project fade">
-      <div class="project-top">
-        <span class="project-name">Banner</span>
-        <span class="project-meta">TMDB / Canvas</span>
-      </div>
-      <p class="project-desc">Cinematic movie banner creator. Search movies, pick posters, rate with half-star precision, add one-line reviews. Export as image.</p>
-      <div class="project-links">
-        <a href="https://github.com/Suz41/Banner" target="_blank" rel="noopener">Source</a>
-        <a href="https://suz41.github.io/Banner" target="_blank" rel="noopener">Live</a>
-      </div>
-    </article>
-
-    <article class="project fade">
-      <div class="project-top">
-        <span class="project-name">Logit</span>
-        <span class="project-meta">TMDB / localStorage</span>
-      </div>
-      <p class="project-desc">Personal movie logger. Search, rate, and track your watch history. Includes a stats dashboard. All data stays local.</p>
-      <div class="project-links">
-        <a href="https://github.com/Suz41/Logit" target="_blank" rel="noopener">Source</a>
-        <a href="https://suz41.github.io/Logit" target="_blank" rel="noopener">Live</a>
-      </div>
-    </article>
-
-    <article class="project fade">
-      <div class="project-top">
-        <span class="project-name">Archive</span>
-        <span class="project-meta">OMDB / Offline</span>
-      </div>
-      <p class="project-desc">A personal film log. No social, no cloud, no noise. Runs entirely in your browser. Simple and focused.</p>
-      <div class="project-links">
-        <a href="https://github.com/Suz41/Archive" target="_blank" rel="noopener">Source</a>
-      </div>
-    </article>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- CONTACT -->
-  <section class="contact">
-    <div class="label fade">Connect</div>
-    <ul class="contact-list fade">
-      <li><span class="name">X</span><a href="https://x.com/sujalacharii" target="_blank" rel="noopener">@sujalacharii</a></li>
-      <li><span class="name">GitHub</span><a href="https://github.com/Suz41" target="_blank" rel="noopener">@Suz41</a></li>
-      <li><span class="name">Letterboxd</span><a href="https://letterboxd.com/suza1" target="_blank" rel="noopener">@suza1</a></li>
-      <li><span class="name">Pinterest</span><a href="https://pinterest.com/suzalpins" target="_blank" rel="noopener">@suzalpins</a></li>
-      <li><span class="name">Instagram</span><a href="https://instagram.com/suzalpins" target="_blank" rel="noopener">@suzalpins</a></li>
-    </ul>
-  </section>
-
-  <footer>Suz41</footer>
+  <footer>
+    SUZ41 — PERSONAL CINEMA SPACE
+  </footer>
 
 </div>
 
 <script>
-  // Fade in on scroll
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }});
-  }, { threshold: 0.15 });
-  document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach((entry)=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('show');
+    }
+  });
+},{
+  threshold:0.1
+});
+
+document.querySelectorAll('.fade').forEach((el)=>{
+  observer.observe(el);
+});
+
 </script>
 
 </body>
