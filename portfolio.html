@@ -3,29 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Suz41 — Portfolio</title>
+<title>Suz41</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@400;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --bg: #0a0a0a;
-    --surface: #141414;
-    --surface2: #1c1c1c;
-    --text: #e8e8e8;
-    --text-dim: #888;
-    --accent: #e2b340;
-    --accent2: #c4993a;
-    --border: #2a2a2a;
+    --bg: #0e0e0e;
+    --text: #d4d4d4;
+    --text-dim: #666;
+    --text-bright: #f0f0f0;
+    --border: #1e1e1e;
   }
 
   body {
     background: var(--bg);
     color: var(--text);
     font-family: 'Inter', sans-serif;
-    line-height: 1.6;
+    font-weight: 300;
+    line-height: 1.7;
     overflow-x: hidden;
+  }
+
+  a { color: var(--text); text-decoration: none; }
+  a:hover { color: var(--text-bright); }
+
+  ::selection { background: #333; color: var(--text-bright); }
+
+  /* === LAYOUT === */
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 2rem;
   }
 
   /* === HERO === */
@@ -34,638 +44,311 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 2rem;
-    position: relative;
-    overflow: hidden;
+    padding: 2rem 0;
   }
 
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background:
-      radial-gradient(ellipse at 20% 50%, rgba(226, 179, 64, 0.06) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 50%, rgba(226, 179, 64, 0.04) 0%, transparent 60%);
-    pointer-events: none;
-  }
-
-  .film-strip {
-    position: absolute;
-    top: 0; bottom: 0;
-    width: 40px;
-    background: repeating-linear-gradient(
-      to bottom,
-      transparent 0px,
-      transparent 8px,
-      var(--border) 8px,
-      var(--border) 12px,
-      transparent 12px,
-      transparent 20px
-    );
-    opacity: 0.3;
-  }
-  .film-strip.left { left: 20px; }
-  .film-strip.right { right: 20px; }
-
-  @media (max-width: 768px) {
-    .film-strip { display: none; }
-  }
-
-  .hero-label {
-    font-size: 0.85rem;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--accent);
+  .hero-name {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 400;
+    color: var(--text-bright);
     margin-bottom: 1.5rem;
-    font-weight: 600;
+    letter-spacing: -0.5px;
   }
 
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.5rem, 8vw, 5rem);
-    font-weight: 700;
-    line-height: 1.1;
-    margin-bottom: 1rem;
-  }
-
-  .hero h1 span {
-    color: var(--accent);
-  }
-
-  .hero-sub {
-    font-size: 1.15rem;
+  .hero-desc {
+    font-size: 1.05rem;
     color: var(--text-dim);
-    max-width: 500px;
-    margin-bottom: 2.5rem;
-    font-weight: 300;
+    max-width: 480px;
+    line-height: 1.8;
+    margin-bottom: 3rem;
   }
 
-  .hero-cta {
+  .socials {
     display: flex;
-    gap: 1rem;
+    gap: 2rem;
     flex-wrap: wrap;
-    justify-content: center;
   }
 
-  .btn {
-    padding: 0.75rem 2rem;
-    border-radius: 4px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.2s;
-    cursor: pointer;
-    border: none;
-    letter-spacing: 0.5px;
-  }
-
-  .btn-primary {
-    background: var(--accent);
-    color: var(--bg);
-  }
-  .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
-
-  .btn-outline {
-    background: transparent;
-    color: var(--text);
-    border: 1px solid var(--border);
-  }
-  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
-
-  /* === NAV === */
-  nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(10, 10, 10, 0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    transform: translateY(-100%);
-    transition: transform 0.3s;
-  }
-  nav.visible { transform: translateY(0); }
-
-  .nav-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--accent);
-    text-decoration: none;
-  }
-
-  .nav-links { display: flex; gap: 2rem; }
-  .nav-links a {
-    color: var(--text-dim);
-    text-decoration: none;
+  .socials a {
     font-size: 0.85rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+    position: relative;
     transition: color 0.2s;
   }
-  .nav-links a:hover { color: var(--accent); }
 
-  /* === SECTIONS === */
-  section {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 6rem 2rem;
+  .socials a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--text-bright);
+    transition: width 0.3s;
   }
 
-  .section-label {
-    font-size: 0.8rem;
-    letter-spacing: 4px;
+  .socials a:hover { color: var(--text-bright); }
+  .socials a:hover::after { width: 100%; }
+
+  /* === DIVIDER === */
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: var(--border);
+    margin: 5rem 0;
+  }
+
+  /* === SECTION HEADERS === */
+  .label {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 0.75rem;
-    font-weight: 600;
-  }
-
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: var(--text-dim);
     margin-bottom: 3rem;
-    font-weight: 700;
   }
 
   /* === ABOUT === */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
+  .about {
+    padding-bottom: 4rem;
   }
 
-  @media (max-width: 768px) {
-    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-  }
-
-  .about-text p {
+  .about p {
     color: var(--text-dim);
-    margin-bottom: 1.5rem;
-    font-size: 1.05rem;
-    line-height: 1.8;
+    margin-bottom: 1.25rem;
+    font-size: 0.95rem;
   }
 
-  .about-text p strong { color: var(--text); font-weight: 600; }
-
-  .about-stats {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-
-  .stat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1.5rem;
-    text-align: center;
-  }
-
-  .stat-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--accent);
-  }
-
-  .stat-label {
-    font-size: 0.8rem;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 0.25rem;
+  .about p strong {
+    color: var(--text);
+    font-weight: 400;
   }
 
   /* === PROJECTS === */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
+  .projects {
+    padding-bottom: 4rem;
   }
 
-  .project-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-    transition: all 0.3s;
-    position: relative;
+  .project {
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--border);
+    transition: opacity 0.3s;
   }
 
-  .project-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(226, 179, 64, 0.08);
-  }
+  .project:last-child { border-bottom: none; }
 
-  .project-thumb {
-    height: 200px;
-    background: var(--surface2);
+  .project:hover { opacity: 0.85; }
+
+  .project-top {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .project-thumb::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    background: linear-gradient(transparent, var(--surface));
-  }
-
-  .project-body {
-    padding: 1.5rem;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 
   .project-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--text-bright);
+  }
+
+  .project-meta {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
   }
 
   .project-desc {
+    font-size: 0.9rem;
     color: var(--text-dim);
-    font-size: 0.95rem;
     margin-bottom: 1rem;
-    line-height: 1.6;
-  }
-
-  .project-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .tag {
-    background: var(--surface2);
-    color: var(--text-dim);
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    letter-spacing: 0.5px;
+    max-width: 520px;
   }
 
   .project-links {
     display: flex;
-    gap: 1rem;
-  }
-
-  .project-links a {
-    color: var(--accent);
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 600;
-    transition: opacity 0.2s;
-  }
-  .project-links a:hover { opacity: 0.7; }
-
-  /* === MOVIE COLLECTION === */
-  .movie-section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 3rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .movie-section::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: radial-gradient(ellipse at center, rgba(226, 179, 64, 0.03) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .movie-icon {
-    font-size: 3rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .movie-section h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-  }
-
-  .movie-section p {
-    color: var(--text-dim);
-    max-width: 600px;
-    margin: 0 auto 2rem;
-    line-height: 1.8;
-  }
-
-  .movie-apps {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .movie-app-link {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    color: var(--text);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: all 0.2s;
-  }
-
-  .movie-app-link:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  /* === CONTACT === */
-  .contact-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
   }
 
-  .contact-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 2rem;
-    text-align: center;
-    text-decoration: none;
-    color: var(--text);
-    transition: all 0.3s;
-  }
-
-  .contact-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
-  }
-
-  .contact-icon {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  }
-
-  .contact-label {
-    font-weight: 600;
-    margin-bottom: 0.25rem;
-  }
-
-  .contact-value {
+  .project-links a {
+    font-size: 0.8rem;
     color: var(--text-dim);
-    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
   }
+
+  .project-links a:hover { color: var(--text-bright); }
+
+  /* === CONTACT === */
+  .contact {
+    padding-bottom: 6rem;
+  }
+
+  .contact-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-list li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .contact-list .name {
+    min-width: 90px;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+  }
+
+  .contact-list a {
+    font-size: 0.9rem;
+    position: relative;
+  }
+
+  .contact-list a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--text-dim);
+    transition: width 0.3s;
+  }
+
+  .contact-list a:hover::after { width: 100%; }
 
   /* === FOOTER === */
   footer {
-    text-align: center;
-    padding: 3rem 2rem;
-    border-top: 1px solid var(--border);
+    padding: 2rem 0 4rem;
+    font-size: 0.75rem;
     color: var(--text-dim);
-    font-size: 0.85rem;
+    letter-spacing: 0.5px;
   }
-
-  footer span { color: var(--accent); }
 
   /* === SCROLLBAR === */
-  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+  ::-webkit-scrollbar-thumb { background: #222; border-radius: 2px; }
 
-  /* === ANIMATIONS === */
-  .fade-in {
+  /* === FADE IN === */
+  .fade {
     opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.6s ease-out;
+    transform: translateY(20px);
+    transition: all 0.5s ease-out;
   }
-  .fade-in.visible {
+  .fade.visible {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  /* === MOBILE === */
+  @media (max-width: 600px) {
+    .container { padding: 0 1.5rem; }
+    .socials { gap: 1.2rem; }
+    .project-top { flex-direction: column; gap: 0.2rem; }
+    .divider { margin: 3.5rem 0; }
   }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav id="nav">
-  <a href="#" class="nav-logo">Suz41</a>
-  <div class="nav-links">
-    <a href="#about">About</a>
-    <a href="#projects">Projects</a>
-    <a href="#movies">Movies</a>
-    <a href="#contact">Contact</a>
-  </div>
-</nav>
+<div class="container">
 
-<!-- HERO -->
-<section class="hero">
-  <div class="film-strip left"></div>
-  <div class="film-strip right"></div>
-  <div class="hero-label">Portfolio</div>
-  <h1>I'm <span>Sujal</span></h1>
-  <p class="hero-sub">Not a developer. Just someone who likes to make things with AI and my own ideas.</p>
-  <div class="hero-cta">
-    <a href="#projects" class="btn btn-primary">View Projects</a>
-    <a href="https://github.com/Suz41" target="_blank" class="btn btn-outline">GitHub</a>
-  </div>
-</section>
+  <!-- HERO -->
+  <section class="hero">
+    <h1 class="hero-name fade">Suz41</h1>
+    <p class="hero-desc fade">Not a developer. Just someone who makes things with AI and my own ideas. Mostly around movies.</p>
+    <nav class="socials fade">
+      <a href="https://x.com/sujalacharii" target="_blank" rel="noopener">X</a>
+      <a href="https://github.com/Suz41" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://letterboxd.com/suza1" target="_blank" rel="noopener">Letterboxd</a>
+      <a href="https://pinterest.com/suzalpins" target="_blank" rel="noopener">Pinterest</a>
+      <a href="https://instagram.com/suzalpins" target="_blank" rel="noopener">Instagram</a>
+    </nav>
+  </section>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="section-label">About</div>
-  <div class="section-title">Who I Am</div>
-  <div class="about-grid">
-    <div class="about-text">
-      <p>Hi, I'm <strong>Sujal Achari</strong> — also known as <strong>Suz41</strong> on GitHub. I'm based in India.</p>
-      <p>I'm not a traditional developer. I build things by combining <strong>AI tools with my own ideas</strong>, turning thoughts into working web apps. No frameworks, no build steps — just clean HTML, CSS, and JavaScript.</p>
-      <p>My main interest is <strong>movies and film</strong>. I've built tools to create cinematic banners, log personal movie reviews, and track what I watch — all running offline in the browser with no cloud or accounts needed.</p>
-    </div>
-    <div class="about-stats">
-      <div class="stat-card">
-        <div class="stat-num">3</div>
-        <div class="stat-label">Projects</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">37+</div>
-        <div class="stat-label">Commits</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">3</div>
-        <div class="stat-label">Live Apps</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">100%</div>
-        <div class="stat-label">Client-Side</div>
-      </div>
-    </div>
-  </div>
-</section>
+  <div class="divider"></div>
 
-<!-- PROJECTS -->
-<section id="projects">
-  <div class="section-label">Work</div>
-  <div class="section-title">Projects</div>
-  <div class="projects-grid">
+  <!-- ABOUT -->
+  <section class="about">
+    <div class="label fade">About</div>
+    <p class="fade">I'm <strong>Sujal</strong>. I build small, focused tools — mostly around movies and film. No frameworks, no build steps. Just HTML, CSS, and JavaScript.</p>
+    <p class="fade">Everything runs in the browser. No accounts, no cloud, no tracking. I like things that work offline and stay out of the way.</p>
+  </section>
 
-    <div class="project-card fade-in">
-      <div class="project-thumb">
-        <span>B</span>
-      </div>
-      <div class="project-body">
-        <div class="project-name">Banner</div>
-        <div class="project-desc">Cinematic movie banner creator. Search movies via TMDB, pick from multiple posters, rate with half-star precision, and add one-line reviews.</div>
-        <div class="project-tags">
-          <span class="tag">HTML</span>
-          <span class="tag">CSS</span>
-          <span class="tag">JavaScript</span>
-          <span class="tag">TMDB API</span>
-          <span class="tag">Canvas</span>
-        </div>
-        <div class="project-links">
-          <a href="https://github.com/Suz41/Banner" target="_blank">Source</a>
-          <a href="https://suz41.github.io/Banner" target="_blank">Live</a>
-        </div>
-      </div>
-    </div>
+  <div class="divider"></div>
 
-    <div class="project-card fade-in">
-      <div class="project-thumb">
-        <span>L</span>
-      </div>
-      <div class="project-body">
-        <div class="project-name">Logit</div>
-        <div class="project-desc">Personal movie logger. Search via TMDB, rate, and track your watching history — all stored locally in your browser. Includes a stats dashboard.</div>
-        <div class="project-tags">
-          <span class="tag">HTML</span>
-          <span class="tag">CSS</span>
-          <span class="tag">JavaScript</span>
-          <span class="tag">TMDB API</span>
-          <span class="tag">localStorage</span>
-        </div>
-        <div class="project-links">
-          <a href="https://github.com/Suz41/Logit" target="_blank">Source</a>
-          <a href="https://suz41.github.io/Logit" target="_blank">Live</a>
-        </div>
-      </div>
-    </div>
+  <!-- PROJECTS -->
+  <section class="projects">
+    <div class="label fade">Projects</div>
 
-    <div class="project-card fade-in">
-      <div class="project-thumb">
-        <span>A</span>
+    <article class="project fade">
+      <div class="project-top">
+        <span class="project-name">Banner</span>
+        <span class="project-meta">TMDB / Canvas</span>
       </div>
-      <div class="project-body">
-        <div class="project-name">Archive</div>
-        <div class="project-desc">A personal film log. No social, no cloud, no noise. Runs offline and lives entirely in your browser. Simple and focused.</div>
-        <div class="project-tags">
-          <span class="tag">HTML</span>
-          <span class="tag">CSS</span>
-          <span class="tag">JavaScript</span>
-          <span class="tag">OMDB API</span>
-          <span class="tag">Offline</span>
-        </div>
-        <div class="project-links">
-          <a href="https://github.com/Suz41/Archive" target="_blank">Source</a>
-        </div>
+      <p class="project-desc">Cinematic movie banner creator. Search movies, pick posters, rate with half-star precision, add one-line reviews. Export as image.</p>
+      <div class="project-links">
+        <a href="https://github.com/Suz41/Banner" target="_blank" rel="noopener">Source</a>
+        <a href="https://suz41.github.io/Banner" target="_blank" rel="noopener">Live</a>
       </div>
-    </div>
+    </article>
 
-  </div>
-</section>
-
-<!-- MOVIE COLLECTION -->
-<section id="movies">
-  <div class="section-label">Collection</div>
-  <div class="section-title">Movie Tools</div>
-  <div class="movie-section fade-in">
-    <div class="movie-icon">
-      <span>&#127916;</span>
-    </div>
-    <h3>Built for Film Lovers</h3>
-    <p>Every project I build revolves around movies. From creating cinematic banners to logging personal reviews, these tools are designed for people who love film and want to track what they watch — privately, offline, without any noise.</p>
-    <div class="movie-apps">
-      <a href="https://suz41.github.io/Banner" target="_blank" class="movie-app-link">
-        <span>&#127910;</span> Banner Creator
-      </a>
-      <a href="https://suz41.github.io/Logit" target="_blank" class="movie-app-link">
-        <span>&#128221;</span> Movie Logger
-      </a>
-      <a href="https://suz41.github.io/Logit/PS.html" target="_blank" class="movie-app-link">
-        <span>&#128200;</span> Stats Dashboard
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="section-label">Connect</div>
-  <div class="section-title">Get in Touch</div>
-  <div class="contact-grid">
-    <a href="https://github.com/Suz41" target="_blank" class="contact-card">
-      <div class="contact-icon">
-        <span>&#128187;</span>
+    <article class="project fade">
+      <div class="project-top">
+        <span class="project-name">Logit</span>
+        <span class="project-meta">TMDB / localStorage</span>
       </div>
-      <div class="contact-label">GitHub</div>
-      <div class="contact-value">@Suz41</div>
-    </a>
-    <a href="https://letterboxd.com/Suz41" target="_blank" class="contact-card">
-      <div class="contact-icon">
-        <span>&#127916;</span>
+      <p class="project-desc">Personal movie logger. Search, rate, and track your watch history. Includes a stats dashboard. All data stays local.</p>
+      <div class="project-links">
+        <a href="https://github.com/Suz41/Logit" target="_blank" rel="noopener">Source</a>
+        <a href="https://suz41.github.io/Logit" target="_blank" rel="noopener">Live</a>
       </div>
-      <div class="contact-label">Letterboxd</div>
-      <div class="contact-value">@Suz41</div>
-    </a>
-  </div>
-</section>
+    </article>
 
-<!-- FOOTER -->
-<footer>
-  <span>Suz41</span> &mdash; Made with AI and my own ideas
-</footer>
+    <article class="project fade">
+      <div class="project-top">
+        <span class="project-name">Archive</span>
+        <span class="project-meta">OMDB / Offline</span>
+      </div>
+      <p class="project-desc">A personal film log. No social, no cloud, no noise. Runs entirely in your browser. Simple and focused.</p>
+      <div class="project-links">
+        <a href="https://github.com/Suz41/Archive" target="_blank" rel="noopener">Source</a>
+      </div>
+    </article>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT -->
+  <section class="contact">
+    <div class="label fade">Connect</div>
+    <ul class="contact-list fade">
+      <li><span class="name">X</span><a href="https://x.com/sujalacharii" target="_blank" rel="noopener">@sujalacharii</a></li>
+      <li><span class="name">GitHub</span><a href="https://github.com/Suz41" target="_blank" rel="noopener">@Suz41</a></li>
+      <li><span class="name">Letterboxd</span><a href="https://letterboxd.com/suza1" target="_blank" rel="noopener">@suza1</a></li>
+      <li><span class="name">Pinterest</span><a href="https://pinterest.com/suzalpins" target="_blank" rel="noopener">@suzalpins</a></li>
+      <li><span class="name">Instagram</span><a href="https://instagram.com/suzalpins" target="_blank" rel="noopener">@suzalpins</a></li>
+    </ul>
+  </section>
+
+  <footer>Suz41</footer>
+
+</div>
 
 <script>
-  // Navbar show on scroll
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('visible', window.scrollY > window.innerHeight * 0.7);
-  });
-
-  // Fade-in on scroll
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-  // Smooth scroll for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      e.preventDefault();
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
-    });
-  });
+  // Fade in on scroll
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }});
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade').forEach(el => obs.observe(el));
 </script>
 
 </body>
